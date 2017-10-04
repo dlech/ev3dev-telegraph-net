@@ -23,7 +23,12 @@ class Attribute():
             The value read from the attribute
         """
         self.attr.seek(0)
-        return self.attr.read().strip()
+        while True:
+            try:
+                return self.attr.read().strip()
+            except MemoryError:
+                # work around a memory corruption bug
+                continue
 
     def write(self, value):
         """Writes the attribute value

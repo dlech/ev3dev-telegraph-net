@@ -12,7 +12,7 @@ from project import status_light
 from project import variables
 
 
-def translate_code():
+def translate_code(queue_letter):
     """Analyse the array of dots and dashes (the 'Code' array) and convert it
     into a numeric value.
     """
@@ -127,7 +127,7 @@ def translate_code():
         status_light.on(Color.ORANGE, False)
         sound.play_file(sounds['General alert'], 5, PlayType.WAIT)
         status_light.off()
-    else:
+    elif queue_letter:
         queue = variables['Queue']
         variables['Queue'] = write_at_index(queue, len(queue),
                                             variables['NewCharacter'])

@@ -16,7 +16,7 @@ from translate_code import translate_code
 operator.gt = lambda x, y: x > y
 
 
-def read_code():
+def read_code(publish=None):
     """This block is responsible for analysing the timing between pushes of the
     touch sensor to convert a Morse code signal into a letter.
     """
@@ -62,7 +62,10 @@ def read_code():
             if variables['Encoding']:
                 timer[2].wait(operator.gt, 0.8)
                 variables['Encoding'] = False
-                translate_code()
+                translate_code(not bool(publish))
                 variables['CodeIndex'] = 0
+                letter = variables['NewCharacter']
+                if publish and letter != -1:
+                    publish(letter)
 
     fork(thread1, thread2)
